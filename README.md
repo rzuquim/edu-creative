@@ -14,3 +14,10 @@ For documentation purposes to generate the base project and dev environment we a
 npx express-generator --hbs edu-js-creative
 npx prettier --write .
 ```
+
+To ensure auto-reload make sure to create a `.env` file with this content:
+
+```
+NODE_ENV="development"
+```
+

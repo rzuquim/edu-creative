@@ -1,10 +1,13 @@
-import { createParticle } from './particles.js'
+import { createWorld } from './world.js'
 
 let canvas = document.getElementById('main-canvas')
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
-let ctx = canvas.getContext('2d')
-let particle = createParticle()
+let canvasCtx = canvas.getContext('2d')
+canvasCtx.fillStyle = 'red'
 
-console.log(ctx, particle)
+let world = createWorld({ particles: 20, size: [canvas.width, canvas.height] })
+world.draw(canvasCtx)
+
+console.log(canvasCtx, world)
