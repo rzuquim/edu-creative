@@ -1,8 +1,8 @@
-import { createParticle, drawParticle } from './particles.js'
+import { createParticle, drawParticle, updateParticle } from './particles.js'
 
 /**
  * @typedef {Object} World - main holds particles
- * @property {function(CanvasRenderingContext2D): void} draw - Draws the world on a given canvas
+ * @property {function(CanvasRenderingContext2D): void} draw - Draws a frame of the world moving particles around
  */
 
 /**
@@ -12,20 +12,25 @@ import { createParticle, drawParticle } from './particles.js'
  */
 
 /**
- * Creates a world full of happy particles
+ * Creates a world full of happy particles (also sets up the global canvas config)
  * @param {WorldOpts} opts - options to setup the world
+ * @param {CanvasRenderingContext2D} canvasCtx
  * @returns {World}
  **/
-export function createWorld(opts) {
+export function createWorld(opts, canvasCtx) {
     let particles = []
     for (let i = 0; i < opts.particles; i++) {
         particles.push(createParticle({ worldSize: opts.size }))
     }
 
+    canvasCtx.strokeStyle = 'black'
+    canvasCtx.fillStyle = 'red'
+
     return {
         draw: function (ctx) {
             for (let particle of particles) {
                 drawParticle(particle, ctx)
+                updateParticle(particle, ctx)
             }
         },
     }

@@ -5,9 +5,17 @@ canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
 let canvasCtx = canvas.getContext('2d')
-canvasCtx.fillStyle = 'red'
 
-let world = createWorld({ particles: 20, size: [canvas.width, canvas.height] })
-world.draw(canvasCtx)
+let world = createWorld(
+    { particles: 200, size: [canvas.width, canvas.height] },
+    canvasCtx,
+)
 
-console.log(canvasCtx, world)
+function animate() {
+    canvasCtx.clearRect(0, 0, canvas.width, canvas.height)
+    world.draw(canvasCtx)
+    requestAnimationFrame(animate)
+}
+
+animate()
+

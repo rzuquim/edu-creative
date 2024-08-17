@@ -1,14 +1,17 @@
 /**
  * @typedef {Object} Particle
- * @property {number} x - horizontal position
- * @property {number} y - vertical position
+ * @property {number} x - horizontal position of the center of the particle
+ * @property {number} y - vertical position of the center of the particle
+ * @property {number} maxX - horizontal maximum bound (world size)
+ * @property {number} maxY - vertical maximum bound (world size)
+ * @property {number} vx - horizontal velocity
+ * @property {number} vy - verticla velocity
  * @property {number } radius - particle size (default: 15)
  */
 
 /**
  * @typedef {Object} ParticleOpts
  * @property {[number, number]} worldSize - x and y max coordinates in pixels
- * @property {number | undefined } radius - particle size (default: 15)
  */
 
 /**
@@ -17,12 +20,20 @@
  * @returns {Particle}
  **/
 export function createParticle(opts) {
-    let [maxX, maxY] = opts.worldSize
+    let [worldWidth, worldHeight] = opts.worldSize
+    let radius = Math.random() * 40 + 5
+
+    let maxX = worldWidth - radius
+    let maxY = worldHeight - radius
 
     return {
-        x: Math.random() * maxX,
-        y: Math.random() * maxY,
-        radius: opts.radius || 15,
+        x: radius + Math.random() * (worldWidth - 2 * radius),
+        y: radius + Math.random() * (worldHeight - 2 * radius),
+        vx: Math.random() * 4 - 1,
+        vy: Math.random() * 4 - 1,
+        radius,
+        maxX,
+        maxY,
     }
 }
 
@@ -33,10 +44,29 @@ export function createParticle(opts) {
  * @returns {void}
  **/
 export function drawParticle(particle, canvasCtx) {
-    console.debug('drawing particle', particle, canvasCtx)
     canvasCtx.beginPath()
     canvasCtx.arc(particle.x, particle.y, particle.radius, 0, FULL_CIRCLE)
     canvasCtx.fill()
+    canvasCtx.stroke()
+}
+
+/**
+ * Updates the particle positions inside its world
+ * @param {Particle} particle
+ * @returns {void}
+ **/
+export function updateParticle(particle) {
+    particle.x += particle.vx
+    particle.y += particle.vy
+
+    // keeping the particle inside the world bounds
+    if (particle.x <= particle.radius || particle.x >= particle.maxX) {
+        particle.vx *= -1
+    }
+
+    if (particle.y <= particle.radius || particle.y >= particle.maxY) {
+        particle.vy *= -1
+    }
 }
 
 const FULL_CIRCLE = 2 * Math.PI
