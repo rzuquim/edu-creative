@@ -1,0 +1,23 @@
+{
+    "name": "edu-js-creative",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node ./bin/www.cjs",
+        "dev": "nodemon -e js,hbs,json,css ./bin/www"
+    },
+    "dependencies": {
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "express": "^4.19.2",
+        "hbs": "^4.2.0",
+        "http-errors": "~1.6.3",
+        "morgan": "~1.9.1"
+    },
+    "devDependencies": {
+        "connect-livereload": "^0.6.1",
+        "dotenv": "^16.4.5",
+        "livereload": "^0.9.3",
+        "nodemon": "^3.1.4"
+    }
+}
