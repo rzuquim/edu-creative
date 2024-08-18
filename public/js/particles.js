@@ -21,7 +21,7 @@
  **/
 export function createParticle(opts) {
     let [worldWidth, worldHeight] = opts.worldSize
-    let radius = Math.random() * 40 + 5
+    let radius = Math.random() * 10 + 1
 
     let maxX = worldWidth - radius
     let maxY = worldHeight - radius
@@ -29,8 +29,8 @@ export function createParticle(opts) {
     return {
         x: radius + Math.random() * (worldWidth - 2 * radius),
         y: radius + Math.random() * (worldHeight - 2 * radius),
-        vx: Math.random() * 4 - 1,
-        vy: Math.random() * 4 - 1,
+        vx: Math.random() * 1 - 0.5,
+        vy: Math.random() * 1 - 0.5,
         radius,
         maxX,
         maxY,
