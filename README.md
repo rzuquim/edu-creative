@@ -6,18 +6,8 @@ Educational, creative and fun projects that I found on the web.
 
 -   Particles experiments
 
-### Project Setup
-
-For documentation purposes to generate the base project and dev environment we are using
+## Run
 
 ```
-npx express-generator --hbs edu-js-creative
-npx prettier --write .
+npm start
 ```
-
-To ensure auto-reload make sure to create a `.env` file with this content:
-
-```
-NODE_ENV="development"
-```
-

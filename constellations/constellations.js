@@ -7,7 +7,7 @@ canvas.height = window.innerHeight
 let canvasCtx = canvas.getContext('2d')
 
 let world = createWorld(
-    { particles: 200, size: [canvas.width, canvas.height] },
+    { particles: 300, size: [canvas.width, canvas.height] },
     canvasCtx,
 )
 

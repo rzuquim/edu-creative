@@ -1,0 +1,15 @@
+:root {
+    --bg-color: #121212;
+    --bg-color-hover: #2a2a2a;
+    --text-color: #f5f5f5;
+    --primary-color: #ffffff;
+    --secondary-color: #c0c0c0;
+    --hover-color: #e0e0e0;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    --box-shadow-focus: 0 8px 16px rgba(0, 0, 0, 0.5);
+    --proj-height: 300px;
+    --proj-width: 900px;
+    --spacing: 2em;
+}
+

@@ -21,7 +21,7 @@
  **/
 export function createParticle(opts) {
     let [worldWidth, worldHeight] = opts.worldSize
-    let radius = Math.random() * 10 + 1
+    let radius = Math.random() * 10 + 3
 
     let maxX = worldWidth - radius
     let maxY = worldHeight - radius
@@ -47,7 +47,6 @@ export function drawParticle(particle, canvasCtx) {
     canvasCtx.beginPath()
     canvasCtx.arc(particle.x, particle.y, particle.radius, 0, FULL_CIRCLE)
     canvasCtx.fill()
-    canvasCtx.stroke()
 }
 
 /**
