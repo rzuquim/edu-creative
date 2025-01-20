@@ -1,0 +1,13 @@
+debug/
+target/
+
+**/*.rs.bk
+*.pdb
+
+.vscode/*
+.history/
+*.vsix
+
+.idea/
+
+.DS_Store
