@@ -40,3 +40,9 @@ With adaptations for version `0.15`, using also [this video](https://www.youtube
 
 This [migration guide](https://bevyengine.org/learn/migration-guides/0-14-to-0-15/) is also life saver and the example
 on [the bevy repo](https://github.com/bevyengine/bevy/blob/main/examples/2d/sprite_animation.rs).
+
+TODO: 
+
+  see https://gist.github.com/paul-hansen/8c87fe5cb3bab1850943036c7af66eb3
+  see https://stackoverflow.com/questions/76428101/resizing-windows-in-bevy
+
