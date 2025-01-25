@@ -1,6 +1,5 @@
-use bevy::{prelude::*, window::PrimaryWindow};
-
 use super::{Player, PLAYER_SPEED, PLAYER_SPRITE_SIZE};
+use crate::prelude::*;
 
 pub fn move_player(
     mut player_query: Query<&mut Transform, With<Player>>,

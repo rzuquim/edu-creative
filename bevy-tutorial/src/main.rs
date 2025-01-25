@@ -1,6 +1,10 @@
+mod prelude;
+
+mod enemy;
 mod player;
 
-use bevy::prelude::*;
+use bevy::prelude::{Camera2d, DefaultPlugins};
+use prelude::*;
 
 fn main() {
     App::new()

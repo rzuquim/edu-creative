@@ -1,5 +1,4 @@
-use bevy::prelude::*;
-
+use crate::prelude::*;
 use super::Player;
 
 pub fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {

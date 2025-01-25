@@ -1,15 +1,9 @@
 mod lifecycle;
 mod movement;
 
-use bevy::{
-    app::{Startup, Update},
-    prelude::{App, Component, IntoSystemConfigs},
-};
-
+use crate::{prelude::*, ConfinementSystemSet, MovementSystemSet};
 use lifecycle::*;
 use movement::*;
-
-use super::{ConfinementSystemSet, MovementSystemSet};
 
 pub struct Plugin;
 
