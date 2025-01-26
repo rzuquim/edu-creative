@@ -1,7 +1,9 @@
 mod lifecycle;
+mod spawn_animation;
 
 use crate::prelude::*;
 use lifecycle::*;
+use spawn_animation::*;
 
 pub struct Plugin;
 
@@ -15,7 +17,9 @@ impl bevy::app::Plugin for Plugin {
         app.init_resource::<GoodiesSpawn>()
             .add_event::<GoodieSpawnEvt>()
             .add_systems(Update, spawn_goodies_over_time)
-            .add_systems(Update, spawn_goodie);
+            .add_systems(Update, spawn_goodie)
+            .add_systems(Update, star_spawn_animation_run)
+            .add_systems(Update, star_activate);
     }
 }
 

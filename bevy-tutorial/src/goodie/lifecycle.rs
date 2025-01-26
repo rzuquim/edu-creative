@@ -46,7 +46,7 @@ pub fn spawn_goodie(
         info!("Spawning goodie on {} {}!", goodie_pos_x, goodie_pos_y);
 
         let mut transform = Transform::from_xyz(goodie_pos_x, goodie_pos_y, 0.);
-        // transform.scale = Vec3::ZERO;
+        transform.scale = Vec3::ZERO;
         commands.spawn((
             Star {},
             Sprite {
