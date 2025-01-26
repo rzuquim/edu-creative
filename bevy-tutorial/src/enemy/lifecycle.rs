@@ -21,7 +21,6 @@ pub fn spawn_enemies_over_time(
         return;
     }
 
-    // TODO: trigger event to spawn
     enemies_spawn.enemy_curr_count += 1;
     spawn_enemy_pub.send(EnemySpawnEvt);
 }
@@ -74,8 +73,8 @@ pub struct EnemiesSpawn {
 }
 
 impl Default for EnemiesSpawn {
-    fn default() -> EnemiesSpawn {
-        EnemiesSpawn {
+    fn default() -> Self {
+        Self {
             timer: Timer::from_seconds(ENEMY_SPAWN_PERIOD, TimerMode::Repeating),
             enemy_curr_count: 0,
             enemy_max_count: 15,
