@@ -23,10 +23,16 @@ impl bevy::app::Plugin for Plugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<EnemiesSpawn>()
             .add_event::<EnemySpawnEvt>()
-            .add_systems(Update, spawn_enemy)
-            .add_systems(Update, spawn_enemies_over_time)
-            .add_systems(Update, enemy_spawn_animation_run)
-            .add_systems(Update, activate_enemy)
+            .add_systems(
+                Update,
+                (
+                    spawn_enemy,
+                    spawn_enemies_over_time,
+                    enemy_spawn_animation_run,
+                    activate_enemy,
+                )
+                    .in_set(GameRunningSystemSet),
+            )
             .add_systems(Update, move_enemy.in_set(MovementSystemSet))
             .add_systems(Update, confine_enemy.in_set(ConfinementSystemSet));
     }

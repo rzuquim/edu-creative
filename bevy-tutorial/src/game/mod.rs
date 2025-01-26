@@ -1,10 +1,12 @@
 mod collisions;
+mod control_game_state;
 
 use crate::{
     enemy::HALF_ENEMY_SPRITE_SIZE, goodie::HALF_GOODIE_SPRITE_SIZE,
     player::HALF_PLAYER_SPRITE_SIZE, prelude::*,
 };
 use collisions::*;
+use control_game_state::*;
 
 pub struct Plugin;
 
@@ -15,8 +17,10 @@ impl bevy::app::Plugin for Plugin {
     fn build(&self, app: &mut App) {
         app.add_event::<PlayerHitEvt>()
             .add_event::<PlayerGotGoodieEvt>()
-            .add_systems(Update, check_enemy_hit)
-            .add_systems(Update, check_goodie_hit);
+            .add_systems(
+                Update,
+                (toggle_pause_game, check_enemy_hit, check_goodie_hit).in_set(GameRunningSystemSet),
+            );
     }
 }
 

@@ -19,7 +19,18 @@ fn main() {
         .add_plugins(enemy::Plugin)
         .add_plugins(goodie::Plugin)
         .add_plugins(game::Plugin)
-        .configure_sets(Update, MovementSystemSet.before(ConfinementSystemSet))
+        .init_state::<GameState>()
+        .configure_sets(
+            Update,
+            GameRunningSystemSet.run_if(in_state(GameState::Running)),
+        )
+        .configure_sets(Update, ConfinementSystemSet.in_set(GameRunningSystemSet))
+        .configure_sets(
+            Update,
+            MovementSystemSet
+                .before(ConfinementSystemSet)
+                .in_set(GameRunningSystemSet),
+        )
         .run();
 }
 

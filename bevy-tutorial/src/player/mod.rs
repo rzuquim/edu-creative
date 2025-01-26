@@ -1,7 +1,7 @@
 mod lifecycle;
 mod movement;
 
-use crate::{prelude::*, ConfinementSystemSet, MovementSystemSet};
+use crate::prelude::*;
 use lifecycle::*;
 use movement::*;
 
