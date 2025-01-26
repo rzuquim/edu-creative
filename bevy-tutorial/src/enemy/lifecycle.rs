@@ -1,6 +1,25 @@
-use super::{Enemy, EnemyMovement, EnemySpawning, ENEMY_SPAWN_PERIOD, HALF_ENEMY_SPRITE_SIZE};
-use crate::{enemy::ENEMY_SPAWN_ANIMATION_DURATION, prelude::*};
+use super::{
+    Enemy, EnemyMovement, EnemySpawning, ENEMY_SPAWN_ANIMATION_DURATION, ENEMY_SPAWN_PERIOD,
+    HALF_ENEMY_SPRITE_SIZE, STARTUP_ENEMIES_COUNT,
+};
+use crate::{game::PlayerReadyToStart, prelude::*};
 use rand::random;
+
+pub fn spawn_startup_enemies(
+    mut player_ready_to_start_reader: EventReader<PlayerReadyToStart>,
+    mut spawn_enemy_pub: EventWriter<EnemySpawnEvt>,
+) {
+    for _ in player_ready_to_start_reader.read() {
+        info!(
+            "Starting to spawn statup enemies: {}",
+            STARTUP_ENEMIES_COUNT
+        );
+        for _ in 0..STARTUP_ENEMIES_COUNT {
+            spawn_enemy_pub.send(EnemySpawnEvt);
+        }
+        break;
+    }
+}
 
 pub fn spawn_enemies_over_time(
     mut enemies_spawn: ResMut<EnemiesSpawn>,

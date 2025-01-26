@@ -3,19 +3,22 @@ pub use bevy::prelude::*;
 pub use bevy::window::PrimaryWindow;
 
 #[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
-pub struct GameRunningSystemSet;
+pub struct GameStartingSet;
 
 #[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
-pub struct MovementSystemSet;
+pub struct GameRunningSet;
 
 #[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
-pub struct ConfinementSystemSet;
+pub struct MovementSet;
+
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct ConfinementSet;
 
 #[derive(States, Debug, Clone, Copy, Eq, PartialEq, Hash, Default)]
 pub enum GameState {
+    #[default]
     Starting,
     PauseStartRoutine,
-    #[default]
     Running,
     Paused,
 }

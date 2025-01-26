@@ -17,9 +17,11 @@ impl bevy::app::Plugin for Plugin {
     fn build(&self, app: &mut App) {
         app.add_event::<PlayerHitEvt>()
             .add_event::<PlayerGotGoodieEvt>()
+            .add_event::<PlayerReadyToStart>()
+            .add_systems(Update, check_if_game_can_start.in_set(GameStartingSet))
             .add_systems(
                 Update,
-                (toggle_pause_game, check_enemy_hit, check_goodie_hit).in_set(GameRunningSystemSet),
+                (toggle_pause_game, check_enemy_hit, check_goodie_hit).in_set(GameRunningSet),
             );
     }
 }
@@ -29,3 +31,6 @@ pub struct PlayerHitEvt;
 
 #[derive(Event)]
 pub struct PlayerGotGoodieEvt;
+
+#[derive(Event)]
+pub struct PlayerReadyToStart;

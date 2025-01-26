@@ -12,6 +12,7 @@ pub struct Enemy;
 
 pub struct Plugin;
 
+pub const STARTUP_ENEMIES_COUNT: usize = 5;
 pub const ENEMY_SPAWN_PERIOD: f32 = 5.0;
 pub const ENEMY_SPAWN_ANIMATION_DURATION: f32 = 0.5;
 pub const ENEMY_SPRITE_SIZE: f32 = 64.0;
@@ -26,15 +27,25 @@ impl bevy::app::Plugin for Plugin {
             .add_systems(
                 Update,
                 (
-                    spawn_enemy,
-                    spawn_enemies_over_time,
+                    spawn_startup_enemies,
                     enemy_spawn_animation_run,
+                    spawn_enemy,
                     activate_enemy,
                 )
-                    .in_set(GameRunningSystemSet),
+                    .in_set(GameStartingSet),
             )
-            .add_systems(Update, move_enemy.in_set(MovementSystemSet))
-            .add_systems(Update, confine_enemy.in_set(ConfinementSystemSet));
+            .add_systems(
+                Update,
+                (
+                    spawn_enemies_over_time,
+                    enemy_spawn_animation_run,
+                    spawn_enemy,
+                    activate_enemy,
+                )
+                    .in_set(GameRunningSet),
+            )
+            .add_systems(Update, move_enemy.in_set(MovementSet))
+            .add_systems(Update, confine_enemy.in_set(ConfinementSet));
     }
 }
 
@@ -45,3 +56,7 @@ pub struct EnemySpawning {
 
 #[derive(Component)]
 pub struct EnemyActive;
+
+// {
+//     timer: Timer::from_seconds(ENEMY_SPAWN_ANIMATION_DURATION, TimerMode::Once),
+// },

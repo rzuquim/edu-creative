@@ -22,14 +22,13 @@ fn main() {
         .init_state::<GameState>()
         .configure_sets(
             Update,
-            GameRunningSystemSet.run_if(in_state(GameState::Running)),
+            GameStartingSet.run_if(in_state(GameState::Starting)),
         )
-        .configure_sets(Update, ConfinementSystemSet.in_set(GameRunningSystemSet))
+        .configure_sets(Update, GameRunningSet.run_if(in_state(GameState::Running)))
+        .configure_sets(Update, ConfinementSet.in_set(GameRunningSet))
         .configure_sets(
             Update,
-            MovementSystemSet
-                .before(ConfinementSystemSet)
-                .in_set(GameRunningSystemSet),
+            MovementSet.before(ConfinementSet).in_set(GameRunningSet),
         )
         .run();
 }

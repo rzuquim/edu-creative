@@ -24,7 +24,7 @@ impl bevy::app::Plugin for Plugin {
                     star_spawn_animation_run,
                     star_activate,
                 )
-                    .in_set(GameRunningSystemSet),
+                    .in_set(GameRunningSet),
             );
     }
 }
