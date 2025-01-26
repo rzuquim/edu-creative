@@ -1,5 +1,5 @@
-use super::{Player, PLAYER_SPEED, PLAYER_SPRITE_SIZE};
-use crate::{prelude::*, render::window_limits};
+use super::{Player, HALF_PLAYER_SPRITE_SIZE, PLAYER_SPEED};
+use crate::prelude::*;
 
 pub fn move_player(
     mut player_query: Query<&mut Transform, With<Player>>,
@@ -39,28 +39,34 @@ pub fn confine_player_movement(
     if let Ok(mut player_transform) = player_query.get_single_mut() {
         let window = window_query.get_single().unwrap();
 
-        let (x_min, x_max) = window_limits(window.width(), HALF_PLAYER_SPRITE_SIZE);
-        let (y_min, y_max) = window_limits(window.height(), HALF_PLAYER_SPRITE_SIZE);
+        let mut translation = player_transform.translation;
+        let confinement = check_confinement(
+            &player_transform.translation,
+            window,
+            HALF_PLAYER_SPRITE_SIZE,
+        );
 
-        let mut confined_player_pos = player_transform.translation;
-
-        if confined_player_pos.x < x_min {
-            confined_player_pos.x = x_min;
-        } else if confined_player_pos.x > x_max {
-            confined_player_pos.x = x_max;
-        }
-
-        if confined_player_pos.y < y_min {
-            confined_player_pos.y = y_min;
-        } else if confined_player_pos.y > y_max {
-            confined_player_pos.y = y_max;
-        }
-
-        if confined_player_pos == player_transform.translation {
+        if confinement.is_confined() {
             return;
         }
 
-        player_transform.translation = confined_player_pos;
+        if confinement.is_outside_right() {
+            translation.x = confinement.x_max;
+            debug!("Player tring to leave screen on the right!");
+        } else if confinement.is_outside_left() {
+            translation.x = confinement.x_min;
+            debug!("Player tring to leave screen on the left!");
+        }
+
+        if confinement.is_outside_top() {
+            translation.y = confinement.y_max;
+            debug!("Player tring to leave screen on the top!");
+        } else if confinement.is_outside_bottom() {
+            translation.y = confinement.y_min;
+            debug!("Player tring to leave screen on the bottom!");
+        }
+
+        player_transform.translation = translation;
     }
 }
 
@@ -68,5 +74,3 @@ const LEFT: Vec3 = Vec3::new(-1.0, 0.0, 0.0);
 const UP: Vec3 = Vec3::new(0.0, 1.0, 0.0);
 const RIGHT: Vec3 = Vec3::new(1.0, 0.0, 0.0);
 const DOWN: Vec3 = Vec3::new(0.0, -1.0, 0.0);
-
-const HALF_PLAYER_SPRITE_SIZE: f32 = PLAYER_SPRITE_SIZE / 2.0;

@@ -1,3 +1,4 @@
+pub use crate::render::*;
 pub use bevy::prelude::*;
 pub use bevy::window::PrimaryWindow;
 

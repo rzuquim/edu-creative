@@ -9,6 +9,7 @@ pub struct Plugin;
 
 pub const PLAYER_SPEED: f32 = 500.0;
 pub const PLAYER_SPRITE_SIZE: f32 = 64.0;
+pub const HALF_PLAYER_SPRITE_SIZE: f32 = PLAYER_SPRITE_SIZE / 2.0;
 
 impl bevy::app::Plugin for Plugin {
     fn build(&self, app: &mut App) {

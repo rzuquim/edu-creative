@@ -1,5 +1,5 @@
-use super::{Enemy, ENEMY_SPAWN_PERIOD, HALF_ENEMY_SPRITE_SIZE};
-use crate::{prelude::*, render::project_into_screen};
+use super::{Enemy, EnemyMovement, ENEMY_SPAWN_PERIOD, HALF_ENEMY_SPRITE_SIZE};
+use crate::prelude::*;
 use rand::random;
 
 pub fn spawn_enemies_over_time(
@@ -31,8 +31,8 @@ pub fn spawn_enemies_over_time(
     );
 
     let (enemy_pos_x, enemy_pos_y) = (
-        project_into_screen(random_x, window.width(), HALF_ENEMY_SPRITE_SIZE),
-        project_into_screen(random_y, window.height(), HALF_ENEMY_SPRITE_SIZE),
+        project_pos_into_screen(random_x, window.width(), HALF_ENEMY_SPRITE_SIZE),
+        project_pos_into_screen(random_y, window.height(), HALF_ENEMY_SPRITE_SIZE),
     );
 
     info!("Spawning enemy on {} {}!", enemy_pos_x, enemy_pos_y);
@@ -45,6 +45,7 @@ pub fn spawn_enemies_over_time(
         },
         Transform::from_xyz(enemy_pos_x, enemy_pos_y, 0.),
         EnemyStatus::Spawning,
+        EnemyMovement::random(),
     ));
 }
 
