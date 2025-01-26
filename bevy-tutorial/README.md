@@ -33,6 +33,8 @@ these steps to fix the issue:
 
 After all, nothing seems to make it stable, but the issue might be happening only when I resize the window.
 
+## References
+
 My first contact with the engine, following the
 [Tutorial](https://www.youtube.com/watch?v=TQt-v_bFdao&list=PLVnntJRoP85JHGX7rGDu6LaF3fmDDbqyd).
 
@@ -41,8 +43,11 @@ With adaptations for version `0.15`, using also [this video](https://www.youtube
 This [migration guide](https://bevyengine.org/learn/migration-guides/0-14-to-0-15/) is also life saver and the example
 on [the bevy repo](https://github.com/bevyengine/bevy/blob/main/examples/2d/sprite_animation.rs).
 
-TODO: 
+Other references:
 
-  see https://gist.github.com/paul-hansen/8c87fe5cb3bab1850943036c7af66eb3
-  see https://stackoverflow.com/questions/76428101/resizing-windows-in-bevy
+- [Logging](https://bevy-logging.github.io/)
 
+### TODO:
+
+see https://gist.github.com/paul-hansen/8c87fe5cb3bab1850943036c7af66eb3 see
+https://stackoverflow.com/questions/76428101/resizing-windows-in-bevy

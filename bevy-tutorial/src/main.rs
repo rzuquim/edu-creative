@@ -2,6 +2,7 @@ mod prelude;
 
 mod enemy;
 mod player;
+mod render;
 
 use bevy::prelude::{Camera2d, DefaultPlugins};
 use prelude::*;
@@ -13,6 +14,7 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_systems(Startup, spawn_camera)
         .add_plugins(player::Plugin)
+        .add_plugins(enemy::Plugin)
         .configure_sets(Update, MovementSystemSet.before(ConfinementSystemSet))
         .run();
 }

@@ -1,5 +1,5 @@
 use super::{Player, PLAYER_SPEED, PLAYER_SPRITE_SIZE};
-use crate::prelude::*;
+use crate::{prelude::*, render::window_limits};
 
 pub fn move_player(
     mut player_query: Query<&mut Transform, With<Player>>,
@@ -39,8 +39,8 @@ pub fn confine_player_movement(
     if let Ok(mut player_transform) = player_query.get_single_mut() {
         let window = window_query.get_single().unwrap();
 
-        let (x_min, x_max) = window_limits(window.width());
-        let (y_min, y_max) = window_limits(window.height());
+        let (x_min, x_max) = window_limits(window.width(), HALF_PLAYER_SPRITE_SIZE);
+        let (y_min, y_max) = window_limits(window.height(), HALF_PLAYER_SPRITE_SIZE);
 
         let mut confined_player_pos = player_transform.translation;
 
@@ -62,14 +62,6 @@ pub fn confine_player_movement(
 
         player_transform.translation = confined_player_pos;
     }
-}
-
-fn window_limits(window_length: f32) -> (f32, f32) {
-    let half_window = window_length / 2.0;
-    return (
-        -half_window + HALF_PLAYER_SPRITE_SIZE,
-        half_window - HALF_PLAYER_SPRITE_SIZE,
-    );
 }
 
 const LEFT: Vec3 = Vec3::new(-1.0, 0.0, 0.0);
