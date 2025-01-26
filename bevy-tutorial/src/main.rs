@@ -1,6 +1,7 @@
 mod prelude;
 
 mod enemy;
+mod game;
 mod player;
 mod render;
 
@@ -15,6 +16,7 @@ fn main() {
         .add_systems(Startup, spawn_camera)
         .add_plugins(player::Plugin)
         .add_plugins(enemy::Plugin)
+        .add_plugins(game::Plugin)
         .configure_sets(Update, MovementSystemSet.before(ConfinementSystemSet))
         .run();
 }
