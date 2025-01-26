@@ -20,4 +20,4 @@ impl bevy::app::Plugin for Plugin {
 }
 
 #[derive(Component)]
-pub struct Player {}
+pub struct Player;

@@ -1,10 +1,10 @@
-use super::{Enemy, EnemyMovement, ENEMY_SPAWN_PERIOD, HALF_ENEMY_SPRITE_SIZE};
-use crate::prelude::*;
+use super::{Enemy, EnemyMovement, EnemySpawning, ENEMY_SPAWN_PERIOD, HALF_ENEMY_SPRITE_SIZE};
+use crate::{enemy::ENEMY_SPAWN_ANIMATION_DURATION, prelude::*};
 use rand::random;
 
 pub fn spawn_enemies_over_time(
     mut enemies_spawn: ResMut<EnemiesSpawn>,
-    mut spawn_enemy_pub: EventWriter<SpawnEnemyEvt>,
+    mut spawn_enemy_pub: EventWriter<EnemySpawnEvt>,
     time: Res<Time>,
 ) {
     enemies_spawn.timer.tick(time.delta());
@@ -23,11 +23,11 @@ pub fn spawn_enemies_over_time(
 
     // TODO: trigger event to spawn
     enemies_spawn.enemy_curr_count += 1;
-    spawn_enemy_pub.send(SpawnEnemyEvt);
+    spawn_enemy_pub.send(EnemySpawnEvt);
 }
 
 pub fn spawn_enemy(
-    mut spawn_enemy_reader: EventReader<SpawnEnemyEvt>,
+    mut spawn_enemy_reader: EventReader<EnemySpawnEvt>,
     mut commands: Commands,
     window_query: Query<&Window, With<PrimaryWindow>>,
     asset_server: Res<AssetServer>,
@@ -46,27 +46,25 @@ pub fn spawn_enemy(
 
         info!("Spawning enemy on {} {}!", enemy_pos_x, enemy_pos_y);
 
+        let mut transform = Transform::from_xyz(enemy_pos_x, enemy_pos_y, 0.);
+        transform.scale = Vec3::ZERO;
         commands.spawn((
             Enemy {},
             Sprite {
                 image: asset_server.load("ball_red_small.png"),
                 ..default()
             },
-            Transform::from_xyz(enemy_pos_x, enemy_pos_y, 0.),
-            EnemyStatus::Spawning,
+            transform,
+            EnemySpawning {
+                timer: Timer::from_seconds(ENEMY_SPAWN_ANIMATION_DURATION, TimerMode::Once),
+            },
             EnemyMovement::random(),
         ));
     }
 }
 
-#[derive(Component)]
-pub enum EnemyStatus {
-    Spawning,
-    // CanHurtPlayer,
-}
-
 #[derive(Event)]
-pub struct SpawnEnemyEvt;
+pub struct EnemySpawnEvt;
 
 #[derive(Resource)]
 pub struct EnemiesSpawn {

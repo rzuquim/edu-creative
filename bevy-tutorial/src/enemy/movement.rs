@@ -1,20 +1,23 @@
-use super::{ENEMY_MAX_SPEED, ENEMY_MIN_SPEED, HALF_ENEMY_SPRITE_SIZE};
+use super::{Enemy, EnemyActive, ENEMY_MAX_SPEED, ENEMY_MIN_SPEED, HALF_ENEMY_SPRITE_SIZE};
 use crate::prelude::*;
 use rand::random;
 
-pub fn move_enemy(mut enemy_query: Query<(&mut Transform, &EnemyMovement)>, time: Res<Time>) {
-    for (mut transform, enemy_movement) in enemy_query.iter_mut() {
+pub fn move_enemy(
+    mut enemy_query: Query<(&mut Transform, &EnemyMovement, &EnemyActive), With<Enemy>>,
+    time: Res<Time>,
+) {
+    for (mut transform, enemy_movement, _) in enemy_query.iter_mut() {
         transform.translation +=
             enemy_movement.direction * enemy_movement.speed * time.delta_secs();
     }
 }
 
 pub fn confine_enemy(
-    mut enemy_query: Query<(&Transform, &mut EnemyMovement)>,
+    mut enemy_query: Query<(&Transform, &mut EnemyMovement, &EnemyActive), With<Enemy>>,
     window_query: Query<&Window, With<PrimaryWindow>>,
 ) {
     let window = window_query.get_single().unwrap();
-    for (transform, mut enemy_movement) in enemy_query.iter_mut() {
+    for (transform, mut enemy_movement, _) in enemy_query.iter_mut() {
         let confinement = check_confinement(&transform.translation, window, HALF_ENEMY_SPRITE_SIZE);
 
         if confinement.is_confined() {
