@@ -24,6 +24,9 @@ impl bevy::app::Plugin for Plugin {
 }
 
 #[derive(Component)]
+pub struct Goodie;
+
+#[derive(Component)]
 pub struct Star;
 
 #[derive(Component)]

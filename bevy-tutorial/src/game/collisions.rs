@@ -1,5 +1,7 @@
-use super::{PlayerHitEvt, MIN_DISTANCE_TO_ENEMY_HIT};
-use crate::{enemy::Enemy, player::Player, prelude::*};
+use super::{
+    PlayerGotGoodieEvt, PlayerHitEvt, MIN_DISTANCE_TO_ENEMY_HIT, MIN_DISTANCE_TO_GOODIE_HIT,
+};
+use crate::{enemy::Enemy, goodie::Goodie, player::Player, prelude::*};
 
 pub fn check_enemy_hit(
     mut player_hit_pub: EventWriter<PlayerHitEvt>,
@@ -18,6 +20,27 @@ pub fn check_enemy_hit(
 
             info!("Enemy hit player!");
             player_hit_pub.send(PlayerHitEvt);
+        }
+    }
+}
+
+pub fn check_goodie_hit(
+    mut player_hit_pub: EventWriter<PlayerGotGoodieEvt>,
+    player_query: Query<&Transform, With<Player>>,
+    goodie_query: Query<&Transform, With<Goodie>>,
+) {
+    if let Ok(player_transform) = player_query.get_single() {
+        for enemy_transform in &goodie_query {
+            let distance = player_transform
+                .translation
+                .distance(enemy_transform.translation);
+
+            if distance > MIN_DISTANCE_TO_GOODIE_HIT {
+                continue;
+            }
+
+            info!("Player got goodie!");
+            player_hit_pub.send(PlayerGotGoodieEvt);
         }
     }
 }

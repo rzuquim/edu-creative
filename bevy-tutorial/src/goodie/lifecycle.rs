@@ -1,10 +1,10 @@
 use rand::random;
 
-use super::GOODIES_SPAWN_PERIOD;
-use crate::{
-    goodie::{GoodieSpawning, Star, GOODIE_SPAWN_ANIMATION_DURATION, HALF_GOODIE_SPRITE_SIZE},
-    prelude::*,
+use super::{
+    Goodie, GoodieSpawning, Star, GOODIES_SPAWN_PERIOD, GOODIE_SPAWN_ANIMATION_DURATION,
+    HALF_GOODIE_SPRITE_SIZE,
 };
+use crate::prelude::*;
 
 pub fn spawn_goodies_over_time(
     mut spawn_goodies_pub: EventWriter<GoodieSpawnEvt>,
@@ -48,7 +48,8 @@ pub fn spawn_goodie(
         let mut transform = Transform::from_xyz(goodie_pos_x, goodie_pos_y, 0.);
         transform.scale = Vec3::ZERO;
         commands.spawn((
-            Star {},
+            Goodie,
+            Star,
             Sprite {
                 image: asset_server.load("star.png"),
                 ..default()
