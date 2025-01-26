@@ -19,7 +19,9 @@ pub const HALF_ENEMY_SPRITE_SIZE: f32 = ENEMY_SPRITE_SIZE / 2.0;
 impl bevy::app::Plugin for Plugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<EnemiesSpawn>()
-            .add_systems(Update, (spawn_enemies_over_time, tick_enemy_spawn_timer))
+            .add_event::<SpawnEnemyEvt>()
+            .add_systems(Update, spawn_enemy)
+            .add_systems(Update, spawn_enemies_over_time)
             .add_systems(Update, move_enemy.in_set(MovementSystemSet))
             .add_systems(Update, confine_enemy.in_set(ConfinementSystemSet));
     }
