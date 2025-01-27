@@ -16,15 +16,14 @@ impl bevy::app::Plugin for Plugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<GoodiesSpawn>()
             .add_event::<GoodieSpawnEvt>()
-            .add_systems(
-                Update,
+            .on_update(
+                GameRunningSet,
                 (
                     spawn_goodies_over_time,
                     spawn_goodie,
                     star_spawn_animation_run,
                     star_activate,
-                )
-                    .in_set(GameRunningSet),
+                ),
             );
     }
 }

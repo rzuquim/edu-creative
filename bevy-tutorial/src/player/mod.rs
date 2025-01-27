@@ -14,13 +14,10 @@ pub const PLAYER_SPAWN_ANIMATION_DURATION: f32 = 0.6;
 
 impl bevy::app::Plugin for Plugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, spawn_player.in_set(GameStartingSet))
-            .add_systems(
-                Update,
-                (player_spawn_animation, activate_player).in_set(GameStartingSet),
-            )
-            .add_systems(Update, move_player.in_set(MovementSet))
-            .add_systems(Update, confine_player_movement.in_set(ConfinementSet));
+        app.on_startup(GameStartingSet, spawn_player)
+            .on_update(GameStartingSet, (player_spawn_animation, activate_player))
+            .on_update(MovementSet, move_player)
+            .on_update(ConfinementSet, confine_player_movement);
     }
 }
 

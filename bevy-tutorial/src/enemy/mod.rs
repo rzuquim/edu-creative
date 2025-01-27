@@ -24,28 +24,26 @@ impl bevy::app::Plugin for Plugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<EnemiesSpawn>()
             .add_event::<EnemySpawnEvt>()
-            .add_systems(
-                Update,
+            .on_update(
+                GameStartingSet,
                 (
                     spawn_startup_enemies,
                     enemy_spawn_animation_run,
                     spawn_enemy,
                     activate_enemy,
-                )
-                    .in_set(GameStartingSet),
+                ),
             )
-            .add_systems(
-                Update,
+            .on_update(
+                GameRunningSet,
                 (
                     spawn_enemies_over_time,
                     enemy_spawn_animation_run,
                     spawn_enemy,
                     activate_enemy,
-                )
-                    .in_set(GameRunningSet),
+                ),
             )
-            .add_systems(Update, move_enemy.in_set(MovementSet))
-            .add_systems(Update, confine_enemy.in_set(ConfinementSet));
+            .on_update(MovementSet, move_enemy)
+            .on_update(ConfinementSet, confine_enemy);
     }
 }
 
@@ -56,7 +54,3 @@ pub struct EnemySpawning {
 
 #[derive(Component)]
 pub struct EnemyActive;
-
-// {
-//     timer: Timer::from_seconds(ENEMY_SPAWN_ANIMATION_DURATION, TimerMode::Once),
-// },

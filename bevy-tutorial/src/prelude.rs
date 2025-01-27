@@ -28,6 +28,18 @@ pub trait SystemSetsExts {
         self: &'a mut Self,
         sets: [impl IntoSystemSetConfigs; N],
     ) -> &'a mut Self;
+
+    fn on_startup<'a, M>(
+        self: &'a mut Self,
+        set: impl SystemSet,
+        systems: impl IntoSystemConfigs<M>,
+    ) -> &'a mut Self;
+
+    fn on_update<'a, M>(
+        self: &'a mut Self,
+        set: impl SystemSet,
+        systems: impl IntoSystemConfigs<M>,
+    ) -> &'a mut Self;
 }
 
 impl SystemSetsExts for App {
@@ -39,5 +51,21 @@ impl SystemSetsExts for App {
             self.configure_sets(Update, set);
         }
         return self;
+    }
+
+    fn on_startup<'a, M>(
+        self: &'a mut Self,
+        set: impl SystemSet,
+        systems: impl IntoSystemConfigs<M>,
+    ) -> &'a mut Self {
+        return self.add_systems(Startup, systems.in_set(set));
+    }
+
+    fn on_update<'a, M>(
+        self: &'a mut Self,
+        set: impl SystemSet,
+        systems: impl IntoSystemConfigs<M>,
+    ) -> &'a mut Self {
+        return self.add_systems(Update, systems.in_set(set));
     }
 }

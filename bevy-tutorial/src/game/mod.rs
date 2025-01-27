@@ -21,16 +21,15 @@ impl bevy::app::Plugin for Plugin {
         app.add_event::<PlayerHitEvt>()
             .add_event::<PlayerGotGoodieEvt>()
             .add_event::<PlayerReadyToStart>()
-            .add_systems(Update, check_if_game_can_start.in_set(GameStartingSet))
-            .add_systems(
-                Update,
+            .on_update(GameStartingSet, check_if_game_can_start)
+            .on_update(
+                GameRunningSet,
                 (
                     toggle_pause_game,
                     check_enemy_hit,
                     check_goodie_hit,
                     consume_goodie,
-                )
-                    .in_set(GameRunningSet),
+                ),
             );
     }
 }
