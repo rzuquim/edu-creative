@@ -14,6 +14,9 @@ pub struct MovementSet;
 #[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
 pub struct ConfinementSet;
 
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct GameOverSet;
+
 #[derive(States, Debug, Clone, Copy, Eq, PartialEq, Hash, Default)]
 pub enum GameState {
     #[default]
@@ -21,6 +24,7 @@ pub enum GameState {
     PauseStartRoutine,
     Running,
     Paused,
+    GameOver,
 }
 
 pub trait SystemSetsExts {

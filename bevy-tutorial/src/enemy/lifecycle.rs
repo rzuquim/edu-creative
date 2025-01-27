@@ -1,6 +1,6 @@
 use super::{
-    Enemy, EnemyMovement, EnemySpawning, ENEMY_SPAWN_ANIMATION_DURATION, ENEMY_SPAWN_PERIOD,
-    HALF_ENEMY_SPRITE_SIZE, STARTUP_ENEMIES_COUNT,
+    Enemy, EnemyMovement, EnemySpawning, ENEMY_SPAWN_PERIOD, HALF_ENEMY_SPRITE_SIZE,
+    STARTUP_ENEMIES_COUNT,
 };
 use crate::{game::PlayerReadyToStart, prelude::*};
 use rand::random;
@@ -67,16 +67,14 @@ pub fn spawn_enemy(
         let mut transform = Transform::from_xyz(enemy_pos_x, enemy_pos_y, 0.);
         transform.scale = Vec3::ZERO;
         commands.spawn((
-            Enemy {},
+            Enemy,
             Sprite {
                 image: asset_server.load("ball_red_small.png"),
                 ..default()
             },
             transform,
-            EnemySpawning {
-                timer: Timer::from_seconds(ENEMY_SPAWN_ANIMATION_DURATION, TimerMode::Once),
-            },
-            EnemyMovement::random(),
+            EnemySpawning::default(),
+            EnemyMovement::default(),
         ));
     }
 }

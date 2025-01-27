@@ -18,7 +18,7 @@ const COLLISION_TOLERANCE: f32 = 0.5;
 
 impl bevy::app::Plugin for Plugin {
     fn build(&self, app: &mut App) {
-        app.add_event::<PlayerHitEvt>()
+        app.add_event::<GameOverEvt>()
             .add_event::<PlayerGotGoodieEvt>()
             .add_event::<PlayerReadyToStart>()
             .on_update(GameStartingSet, check_if_game_can_start)
@@ -29,13 +29,16 @@ impl bevy::app::Plugin for Plugin {
                     check_enemy_hit,
                     check_goodie_hit,
                     consume_goodie.before(check_goodie_hit),
+                    check_for_game_over,
                 ),
             );
     }
 }
 
 #[derive(Event)]
-pub struct PlayerHitEvt;
+pub struct GameOverEvt {
+    pub enemy_entity: Entity,
+}
 
 #[derive(Event)]
 pub struct PlayerGotGoodieEvt {

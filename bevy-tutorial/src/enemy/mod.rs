@@ -1,8 +1,10 @@
+mod game_over;
 mod lifecycle;
 mod movement;
 mod spawn_animation;
 
 use crate::prelude::*;
+use game_over::*;
 use lifecycle::*;
 use movement::*;
 use spawn_animation::*;
@@ -43,7 +45,15 @@ impl bevy::app::Plugin for Plugin {
                 ),
             )
             .on_update(MovementSet, move_enemy)
-            .on_update(ConfinementSet, confine_enemy);
+            .on_update(ConfinementSet, confine_enemy)
+            .on_update(
+                GameOverSet,
+                (
+                    start_despawn_enemies,
+                    enemy_despawn_animation_run,
+                    enemy_despawn,
+                ),
+            );
     }
 }
 
@@ -53,4 +63,25 @@ pub struct EnemySpawning {
 }
 
 #[derive(Component)]
+pub struct EnemyDespawning {
+    pub timer: Timer,
+}
+
+#[derive(Component)]
 pub struct EnemyActive;
+
+impl Default for EnemySpawning {
+    fn default() -> Self {
+        return Self {
+            timer: Timer::from_seconds(ENEMY_SPAWN_ANIMATION_DURATION, TimerMode::Once),
+        };
+    }
+}
+
+impl Default for EnemyDespawning {
+    fn default() -> Self {
+        return Self {
+            timer: Timer::from_seconds(ENEMY_SPAWN_ANIMATION_DURATION, TimerMode::Once),
+        };
+    }
+}

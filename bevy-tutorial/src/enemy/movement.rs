@@ -42,9 +42,9 @@ pub struct EnemyMovement {
     pub speed: f32,
 }
 
-impl EnemyMovement {
-    pub fn random() -> Self {
-        let direction = Vec3::new(random::<f32>(), random::<f32>(), 0.).normalize();
+impl Default for EnemyMovement {
+    fn default() -> Self {
+        let direction = Vec3::new(random::<f32>() + 0.1, random::<f32>() + 0.1, 0.).normalize();
         let speed = ENEMY_MIN_SPEED + (random::<f32>() * (ENEMY_MAX_SPEED - ENEMY_MIN_SPEED));
         return EnemyMovement { direction, speed };
     }

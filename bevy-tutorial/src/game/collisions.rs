@@ -1,15 +1,15 @@
 use super::{
-    PlayerGotGoodieEvt, PlayerHitEvt, MIN_DISTANCE_TO_ENEMY_HIT, MIN_DISTANCE_TO_GOODIE_HIT,
+    GameOverEvt, PlayerGotGoodieEvt, MIN_DISTANCE_TO_ENEMY_HIT, MIN_DISTANCE_TO_GOODIE_HIT,
 };
 use crate::{enemy::Enemy, goodie::Goodie, player::Player, prelude::*};
 
 pub fn check_enemy_hit(
-    mut player_hit_pub: EventWriter<PlayerHitEvt>,
+    mut player_hit_pub: EventWriter<GameOverEvt>,
     player_query: Query<&Transform, With<Player>>,
-    enemy_query: Query<&Transform, With<Enemy>>,
+    enemy_query: Query<(&Transform, Entity), With<Enemy>>,
 ) {
     if let Ok(player_transform) = player_query.get_single() {
-        for enemy_transform in &enemy_query {
+        for (enemy_transform, enemy_entity) in &enemy_query {
             let distance = player_transform
                 .translation
                 .distance(enemy_transform.translation);
@@ -19,7 +19,7 @@ pub fn check_enemy_hit(
             }
 
             info!("Enemy hit player!");
-            player_hit_pub.send(PlayerHitEvt);
+            player_hit_pub.send(GameOverEvt { enemy_entity });
         }
     }
 }

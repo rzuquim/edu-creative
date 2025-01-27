@@ -23,6 +23,7 @@ fn main() {
         .declare_sets([
             GameStartingSet.run_if(in_state(GameState::Starting)),
             GameRunningSet.run_if(in_state(GameState::Running)),
+            GameOverSet.run_if(in_state(GameState::GameOver)),
             ConfinementSet.in_set(GameRunningSet),
             MovementSet.before(ConfinementSet).in_set(GameRunningSet),
         ])
