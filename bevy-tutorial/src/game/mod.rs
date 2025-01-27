@@ -28,7 +28,7 @@ impl bevy::app::Plugin for Plugin {
                     toggle_pause_game,
                     check_enemy_hit,
                     check_goodie_hit,
-                    consume_goodie,
+                    consume_goodie.before(check_goodie_hit),
                 ),
             );
     }
