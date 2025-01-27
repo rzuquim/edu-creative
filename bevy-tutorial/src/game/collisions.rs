@@ -27,20 +27,29 @@ pub fn check_enemy_hit(
 pub fn check_goodie_hit(
     mut player_hit_pub: EventWriter<PlayerGotGoodieEvt>,
     player_query: Query<&Transform, With<Player>>,
-    goodie_query: Query<&Transform, With<Goodie>>,
+    goodie_query: Query<(&Transform, Entity), With<Goodie>>,
 ) {
     if let Ok(player_transform) = player_query.get_single() {
-        for enemy_transform in &goodie_query {
+        for (goodie_transform, goodie_entity) in &goodie_query {
             let distance = player_transform
                 .translation
-                .distance(enemy_transform.translation);
+                .distance(goodie_transform.translation);
 
             if distance > MIN_DISTANCE_TO_GOODIE_HIT {
                 continue;
             }
 
             info!("Player got goodie!");
-            player_hit_pub.send(PlayerGotGoodieEvt);
+            player_hit_pub.send(PlayerGotGoodieEvt { goodie_entity });
         }
+    }
+}
+
+pub fn consume_goodie(
+    mut commands: Commands,
+    mut consume_goodie_reader: EventReader<PlayerGotGoodieEvt>,
+) {
+    for evt in consume_goodie_reader.read() {
+        commands.entity(evt.goodie_entity).despawn();
     }
 }
