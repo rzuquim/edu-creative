@@ -24,12 +24,12 @@ pub fn confine_enemy(
             continue;
         }
 
-        if confinement.is_outside_right() || confinement.is_outside_left() {
+        if confinement.is(OUTSIDE_RIGHT) || confinement.is(OUTSIDE_LEFT) {
             enemy_movement.direction.x *= -1.0;
             debug!("Enemy bounced horizontally!");
         }
 
-        if confinement.is_outside_top() || confinement.is_outside_bottom() {
+        if confinement.is(OUTSIDE_TOP) || confinement.is(OUTSIDE_BOTTOM) {
             enemy_movement.direction.y *= -1.0;
             debug!("Enemy bounced vertically!");
         }

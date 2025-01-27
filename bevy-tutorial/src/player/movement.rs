@@ -50,18 +50,18 @@ pub fn confine_player_movement(
             return;
         }
 
-        if confinement.is_outside_right() {
+        if confinement.is(OUTSIDE_RIGHT) {
             translation.x = confinement.x_max;
             debug!("Player tring to leave screen on the right!");
-        } else if confinement.is_outside_left() {
+        } else if confinement.is(OUTSIDE_LEFT) {
             translation.x = confinement.x_min;
             debug!("Player tring to leave screen on the left!");
         }
 
-        if confinement.is_outside_top() {
+        if confinement.is(OUTSIDE_TOP) {
             translation.y = confinement.y_max;
             debug!("Player tring to leave screen on the top!");
-        } else if confinement.is_outside_bottom() {
+        } else if confinement.is(OUTSIDE_BOTTOM) {
             translation.y = confinement.y_min;
             debug!("Player tring to leave screen on the bottom!");
         }
