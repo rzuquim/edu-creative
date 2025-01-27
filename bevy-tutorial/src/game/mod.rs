@@ -21,14 +21,14 @@ impl bevy::app::Plugin for Plugin {
         app.add_event::<GameOverEvt>()
             .add_event::<PlayerGotGoodieEvt>()
             .add_event::<PlayerReadyToStart>()
-            .on_update(GameStartingSet, check_if_game_can_start)
+            .on_update(AppState::InGame, toggle_pause_game)
+            .on_update(GameState::Starting, check_if_game_can_start)
             .on_update(
-                GameRunningSet,
+                GameState::Running,
                 (
-                    toggle_pause_game,
                     check_enemy_hit,
                     check_goodie_hit,
-                    consume_goodie.before(check_goodie_hit),
+                    consume_goodie.after(check_goodie_hit),
                     check_for_game_over,
                 ),
             );

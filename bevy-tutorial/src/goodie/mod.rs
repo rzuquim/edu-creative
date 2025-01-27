@@ -17,7 +17,7 @@ impl bevy::app::Plugin for Plugin {
         app.init_resource::<GoodiesSpawn>()
             .add_event::<GoodieSpawnEvt>()
             .on_update(
-                GameRunningSet,
+                GameState::Running,
                 (
                     spawn_goodies_over_time,
                     spawn_goodie,

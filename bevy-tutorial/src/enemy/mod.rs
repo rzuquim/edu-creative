@@ -27,7 +27,7 @@ impl bevy::app::Plugin for Plugin {
         app.init_resource::<EnemiesSpawn>()
             .add_event::<EnemySpawnEvt>()
             .on_update(
-                GameStartingSet,
+                GameState::Starting,
                 (
                     spawn_startup_enemies,
                     enemy_spawn_animation_run,
@@ -36,18 +36,18 @@ impl bevy::app::Plugin for Plugin {
                 ),
             )
             .on_update(
-                GameRunningSet,
+                GameState::Running,
                 (
                     spawn_enemies_over_time,
                     enemy_spawn_animation_run,
                     spawn_enemy,
                     activate_enemy,
+                    move_enemy,
+                    confine_enemy.after(move_enemy),
                 ),
             )
-            .on_update(MovementSet, move_enemy)
-            .on_update(ConfinementSet, confine_enemy)
             .on_update(
-                GameOverSet,
+                GameState::GameOver,
                 (
                     start_despawn_enemies,
                     enemy_despawn_animation_run,

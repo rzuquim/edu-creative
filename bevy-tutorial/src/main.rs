@@ -3,6 +3,7 @@ mod prelude;
 mod enemy;
 mod game;
 mod goodie;
+mod menu;
 mod player;
 mod render;
 
@@ -15,18 +16,13 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_systems(Startup, spawn_camera)
+        .add_plugins(menu::Plugin)
+        .add_plugins(game::Plugin)
         .add_plugins(player::Plugin)
         .add_plugins(enemy::Plugin)
         .add_plugins(goodie::Plugin)
-        .add_plugins(game::Plugin)
+        .init_state::<AppState>()
         .init_state::<GameState>()
-        .declare_sets([
-            GameStartingSet.run_if(in_state(GameState::Starting)),
-            GameRunningSet.run_if(in_state(GameState::Running)),
-            GameOverSet.run_if(in_state(GameState::GameOver)),
-            ConfinementSet.in_set(GameRunningSet),
-            MovementSet.before(ConfinementSet).in_set(GameRunningSet),
-        ])
         .run();
 }
 
