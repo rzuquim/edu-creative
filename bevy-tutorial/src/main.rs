@@ -20,16 +20,12 @@ fn main() {
         .add_plugins(goodie::Plugin)
         .add_plugins(game::Plugin)
         .init_state::<GameState>()
-        .configure_sets(
-            Update,
+        .declare_sets([
             GameStartingSet.run_if(in_state(GameState::Starting)),
-        )
-        .configure_sets(Update, GameRunningSet.run_if(in_state(GameState::Running)))
-        .configure_sets(Update, ConfinementSet.in_set(GameRunningSet))
-        .configure_sets(
-            Update,
+            GameRunningSet.run_if(in_state(GameState::Running)),
+            ConfinementSet.in_set(GameRunningSet),
             MovementSet.before(ConfinementSet).in_set(GameRunningSet),
-        )
+        ])
         .run();
 }
 
