@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+
+        <PackAsTool>true</PackAsTool>
+        <RootNamespace>WhichLangs</RootNamespace>
+        <ToolCommandName>which-langs</ToolCommandName>
+        <Description>
+            Reimplementation of linquist in dotnet to detect the programming languages of a
+            repository.
+        </Description>
+        <PackageOutputPath>../.nupkg</PackageOutputPath>
+    </PropertyGroup>
+</Project>
