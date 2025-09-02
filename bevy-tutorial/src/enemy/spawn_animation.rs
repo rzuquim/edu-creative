@@ -11,7 +11,7 @@ pub fn enemy_spawn_animation_run(
             return;
         }
 
-        let size = spawning.timer.elapsed().as_secs_f32() / ENEMY_SPAWN_ANIMATION_DURATION;
+        let size = spawning.timer.fraction();
 
         transform.scale.x = size;
         transform.scale.y = size;
